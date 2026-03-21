@@ -1,16 +1,31 @@
-import { loadUser } from '../user';
-import { httpGet } from '../http';
+import { loadUser, saveUser } from '../user.js';
+import { httpGet } from '../http.js';
 
-jest.mock('../http');
+jest.mock('../http.js');
 
 beforeEach(() => {
   jest.resetAllMocks();
 });
 
-test('should call loadUser once', () => {
-  httpGet.mockReturnValue(JSON.stringify({}));
+describe('loadUser', () => {
+  test('should load user correctly', () => {
+    const mockUser = { id: 1, name: 'Test User' };
+    httpGet.mockReturnValue(JSON.stringify(mockUser));
 
-  const response = loadUser(1);
-  expect(response).toEqual({});
-  expect(httpGet).toHaveBeenCalledWith('http://server:8080/users/1');
+    const user = loadUser(1);
+    expect(user).toEqual(mockUser);
+    expect(httpGet).toHaveBeenCalledWith('http://server:8080/users/1');
+  });
+
+  test('should handle invalid JSON', () => {
+    httpGet.mockReturnValue('invalid json');
+
+    expect(() => loadUser(1)).toThrow();
+  });
+});
+
+describe('saveUser', () => {
+  test('should throw error when called', () => {
+    expect(() => saveUser({})).toThrow('Unimplemented');
+  });
 });

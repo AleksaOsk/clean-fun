@@ -1,8 +1,4 @@
-import Game, {
-  GameSavingData as GameSaving,
-  readGameSaving as loadGame,
-  writeGameSaving as saveGame
-} from './game.js';
+import Game from './game.js';
 import sum from './basic';
 
 console.log('worked');
