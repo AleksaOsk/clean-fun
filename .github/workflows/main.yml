@@ -12,6 +12,8 @@ jobs:
         with:
           node-version: '20.x'
           cache: 'npm'
+      - name: Install dependencies
+        run: npm install
       - name: Build project
         run: npm run build
   test:
@@ -30,7 +32,6 @@ jobs:
         run: npm run lint
       - name: Run test with coverage
         run: npm test -- --coverage
-
   deploy:
     needs: [build, test]
     runs-on: ubuntu-latest
